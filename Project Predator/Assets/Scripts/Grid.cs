@@ -13,8 +13,9 @@ public class Grid
 
     private int[,] gridArray;
     private TextMesh[,] debugTextArray;
+    private GameObject[,] caseArray;
 
-    public Grid(int width, int height, float cellSize, Vector3 originPosition)
+    public Grid(int width, int height, float cellSize, Vector3 originPosition, Transform parent, GameObject prefab)
     {
         this.width = width;
         this.height = height;
@@ -23,20 +24,35 @@ public class Grid
 
         gridArray = new int[width, height];
         debugTextArray = new TextMesh[width, height];
+        caseArray = new GameObject[width, height];
 
         for (int x = 0; x < gridArray.GetLength(0); x++)
         {
             for (int y = 0; y < gridArray.GetLength(1); y++)
             {
-                debugTextArray[x, y] = Functions.CreateWorldText(gridArray[x, y].ToString(), null, GetWorldPosition(x, y) + new Vector3(cellSize, cellSize) * .5f, 20, Color.white, TextAnchor.MiddleCenter);
+                caseArray[x, y] = CreateCase(prefab, parent, GetLocalPosition(x, y) + new Vector3(cellSize, cellSize) * .5f);
+                //debugTextArray[x, y] = Functions.CreateWorldText(gridArray[x, y].ToString(), parent, GetLocalPosition(x, y) + new Vector3(cellSize, cellSize) * .5f, 20, Color.white, TextAnchor.MiddleCenter);
                 Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
                 Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100f);
             }
         }
         Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 100f);
         Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100f);
+    }
 
-        SetValue(2, 1, 56);
+    private GameObject CreateCase(GameObject _prefab, Transform parent, Vector3 localPosition)
+    {
+        GameObject caseObject = GameObject.Instantiate(_prefab);
+        caseObject.transform.SetParent(parent, false);
+        caseObject.transform.localPosition = localPosition;
+        caseObject.GetComponent<MeshRenderer>().sortingOrder = 5000;
+
+        return caseObject;
+    }
+
+    private Vector3 GetLocalPosition(int x, int y)
+    {
+        return new Vector3(x, y) * cellSize;
     }
 
     private Vector3 GetWorldPosition(int x, int y)

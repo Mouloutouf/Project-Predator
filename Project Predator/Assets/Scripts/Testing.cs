@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class Testing : MonoBehaviour
 {
+    public int amountInRow;
+    public int amountInColumn;
+    public float cellSize;
+    public Vector2 startPosition;
+    
+    public List<Case> _cases = new List<Case>();
+
     private Grid grid;
+
+    public GameObject casePrefab;
 
     private void Start()
     {
-        grid = new Grid(4, 2, 10f, new Vector3(20, 0));
-        new Grid(2, 5, 5f, new Vector3(0, -20));
-        new Grid(10, 10, 20f, new Vector3(-100f, -20));
+        grid = new Grid(amountInRow, amountInColumn, cellSize, new Vector3(startPosition.x, startPosition.y), transform, casePrefab);
     }
 
     private void Update()
