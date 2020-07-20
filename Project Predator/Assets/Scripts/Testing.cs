@@ -6,22 +6,22 @@ public class Testing : MonoBehaviour
 {
     public int amountInRow;
     public int amountInColumn;
-    public float cellSize;
+    public int cellSize;
     public Vector2 startPosition;
     
-    public List<Case> _cases = new List<Case>();
+    public List<Tile> tiles = new List<Tile>();
 
     private Grid grid;
 
-    public GameObject casePrefab;
-
     private void Start()
     {
-        grid = new Grid(amountInRow, amountInColumn, cellSize, new Vector3(startPosition.x, startPosition.y), transform, casePrefab);
+        grid = new Grid(amountInRow, amountInColumn, cellSize, new Vector3(startPosition.x, startPosition.y), transform);
     }
 
     private void Update()
     {
+        grid.SelectTile(Functions.GetMouseWorldPosition());
+
         if (Input.GetMouseButtonDown(0))
         {
             grid.SetValue(Functions.GetMouseWorldPosition(), 56);
