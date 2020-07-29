@@ -17,8 +17,5 @@ public class Tile : MonoBehaviour
     
     public GameObject tileObject;
 
-    public GameObject selectable;
-    public GameObject notSelectable;
-
-    public bool selectionState;
+    public GameObject hoverObject;
 }

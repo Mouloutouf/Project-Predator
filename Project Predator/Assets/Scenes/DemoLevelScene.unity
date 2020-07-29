@@ -858,6 +858,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HighGrass Case
       objectReference: {fileID: 0}
+    - target: {fileID: 8228475511296234794, guid: 5915544e7e7dd1244a02d627546dd330,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5915544e7e7dd1244a02d627546dd330, type: 3}
 --- !u!4 &309966756 stripped
@@ -1230,7 +1235,6 @@ MonoBehaviour:
   amountInColumn: 6
   cellSize: 10
   startPosition: {x: -60.2053, y: -31.2493}
-  tiles: []
 --- !u!1001 &409813994
 PrefabInstance:
   m_ObjectHideFlags: 0

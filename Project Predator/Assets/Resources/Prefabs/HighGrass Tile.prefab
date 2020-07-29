@@ -65,7 +65,7 @@ PrefabInstance:
     - target: {fileID: 6711518042368408446, guid: 65455142026df9140ab57f1da184d586,
         type: 3}
       propertyPath: m_Name
-      value: HighGrass Case
+      value: HighGrass Tile
       objectReference: {fileID: 0}
     - target: {fileID: 7308456693818542228, guid: 65455142026df9140ab57f1da184d586,
         type: 3}
@@ -85,12 +85,17 @@ PrefabInstance:
     - target: {fileID: 7308456695087437074, guid: 65455142026df9140ab57f1da184d586,
         type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7308456695087437074, guid: 65455142026df9140ab57f1da184d586,
         type: 3}
       propertyPath: m_Color.b
-      value: 0.43532944
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7308456695087437074, guid: 65455142026df9140ab57f1da184d586,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65455142026df9140ab57f1da184d586, type: 3}
