@@ -4,35 +4,30 @@ using UnityEngine;
 
 public class Interaction : MonoBehaviour
 {
-    public int amountInRow;
-    public int amountInColumn;
-    public int cellSize;
-    public Vector2 startPosition;
     
-    private Grid grid;
+}
 
-    private delegate void Click(Vector3 position);
-    private Click clickDelegate;
+public class Action
+{
+    public virtual void SetGridState() {}
 
-    private void Start()
+    public virtual void Execute(int x, int y) {}
+}
+
+public class Movement : Action
+{
+    public Transform player { get; set; }
+
+    public Grid grid { get; set; }
+
+    public Movement(Grid grid, Transform player)
     {
-        grid = new Grid(amountInRow, amountInColumn, cellSize, new Vector3(startPosition.x, startPosition.y), transform);
-
-        clickDelegate = grid.SelectTile;
+        this.grid = grid;
+        this.player = player;
     }
 
-    private void Update()
+    public override void Execute(int x, int y)
     {
-        grid.HoverTile(Functions.GetMouseWorldPosition());
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            clickDelegate(Functions.GetMouseWorldPosition());
-        }
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            //grid.GetInfoOnTile();
-        }
+        player.position = grid.TileArray[x, y].gameObject.transform.position;
     }
 }

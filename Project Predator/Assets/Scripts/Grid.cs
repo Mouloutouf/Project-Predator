@@ -3,40 +3,71 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Grid
+public delegate void _Action_(int x, int y);
+
+public class Grid : MonoBehaviour
 {
-    private int width;
-    private int height;
+    public int width;
+    public int height;
 
-    private int cellSize;
+    public int cellSize;
 
-    private Vector3 originPosition;
+    public Vector3 originPosition;
     
     private Tile[,] tileArray;
+    public Tile[,] TileArray { get => tileArray; set => tileArray = value; }
 
-    /// Instantiate Class : Initialize Grid
+    public Transform player;
 
-    public Grid(int width, int height, int cellSize, Vector3 originPosition, Transform parent)
+    private _Action_ clickAction_;
+
+    //\
+
+    public int moveArea;
+
+    private void Start()
     {
-        this.width = width;
-        this.height = height;
-        this.cellSize = cellSize;
-        this.originPosition = originPosition;
-        
+        CreateGrid();
+
+        clickAction_ = SelectTile; //Replace with Reset
+    }
+
+    private void Update()
+    {
+        Action(Functions.GetMouseWorldPosition(), HoverTile);
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (clickAction_ != null) Action(Functions.GetMouseWorldPosition(), clickAction_);
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            //grid.GetInfoOnTile();
+        }
+    }
+    
+    public void Reset()
+    {
+        clickAction_ = null;
+    }
+
+    /// Initialize Grid : Get Tiles into Table Array
+
+    public void CreateGrid()
+    {
         tileArray = new Tile[width, height];
 
         for (int x = 0; x < tileArray.GetLength(0); x++)
         {
             for (int y = 0; y < tileArray.GetLength(1); y++)
             {
-                GetTiles(parent, x, y);
+                GetTile(transform, x, y);
             }
         }
-
-        //DrawGrid();
     }
     
-    private void GetTiles(Transform parent, int x, int y)
+    private void GetTile(Transform parent, int x, int y)
     {
         Vector3 tilePos;
         ConvertCoordinatesToLocalPosition(x, y, out tilePos);
@@ -101,6 +132,17 @@ public class Grid
 
     /// Core Methods : Hover, Selection, Information
 
+    public void Action(Vector3 worldPosition, _Action_ action_)
+    {
+        int x, y;
+        ConvertPositionToGridCoordinates(worldPosition, out x, out y);
+
+        if (x >= 0 && y >= 0 && x < width && y < height)
+        {
+            action_(x, y);
+        }
+    }
+
     private int currentX;
     private int currentY;
 
@@ -108,43 +150,56 @@ public class Grid
 
     public void HoverTile(int x, int y)
     {
-        if (x >= 0 && y >= 0 && x < width && y < height)
-        {
-            if (x == currentX && y == currentY) return;
+        if (x == currentX && y == currentY) return;
 
-            foreach (Tile tile in tileArray) if (tile != selected) tile.hoverObject.SetActive(false);
-            tileArray[x, y].hoverObject.SetActive(true);
+        foreach (Tile tile in tileArray) if (tile != selected) tile.hoverObject.SetActive(false);
+        tileArray[x, y].hoverObject.SetActive(true);
 
-            currentX = x;
-            currentY = y;
-        }
-    }
-
-    public void HoverTile(Vector3 worldPosition)
-    {
-        int x, y;
-        ConvertPositionToGridCoordinates(worldPosition, out x, out y);
-        HoverTile(x, y);
+        currentX = x;
+        currentY = y;
     }
 
     public void SelectTile(int x, int y)
     {
-        if (x >= 0 && y >= 0 && x < width && y < height)
-        {
-            foreach (Tile tile in tileArray) { tile.hoverObject.SetActive(false); tile.hoverObject.GetComponent<SpriteRenderer>().color = Color.white; }
-            tileArray[x, y].hoverObject.SetActive(true);
-            tileArray[x, y].hoverObject.GetComponent<SpriteRenderer>().color = Color.yellow;
+        foreach (Tile tile in tileArray) { tile.hoverObject.SetActive(false); tile.hoverObject.GetComponent<SpriteRenderer>().color = Color.white; }
+        tileArray[x, y].hoverObject.SetActive(true);
+        tileArray[x, y].hoverObject.GetComponent<SpriteRenderer>().color = Color.yellow;
 
-            selected = tileArray[x, y];
+        selected = tileArray[x, y];
+    }
+    
+    public void MoveToTile(int x, int y)
+    {
+        player.position = tileArray[x, y].gameObject.transform.position;
+    }
+
+    public void AttackTile(int x, int y)
+    {
+        if (tileArray[x, y].enemy != null)
+        {
+            // Kill the Enemy
         }
     }
 
-    public void SelectTile(Vector3 worldPosition)
+    //\
+
+    public void SetTilesToAction(Vector3 playerPosition, int area)
     {
         int x, y;
-        ConvertPositionToGridCoordinates(worldPosition, out x, out y);
-        SelectTile(x, y);
-    }
+        ConvertPositionToGridCoordinates(playerPosition, out x, out y);
 
-    //\
+        int minX, minY, maxX, maxY;
+        minX = Mathf.Clamp(x - area, 0, width);
+        maxX = Mathf.Clamp(x + area, 0, width);
+        minY = Mathf.Clamp(y - area, 0, height);
+        maxY = Mathf.Clamp(y + area, 0, height);
+
+        for (int _x = 0; _x < width; _x++)
+        {
+            for (int _y = 0; _y < height; _y++)
+            {
+                tileArray[_x, _y].inActionArea = (_x >= minX && _y >= minY && _x < maxX && _y < maxY) ? true : false;
+            }
+        }
+    }
 }

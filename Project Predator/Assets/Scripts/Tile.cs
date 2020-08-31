@@ -18,4 +18,16 @@ public class Tile : MonoBehaviour
     public GameObject tileObject;
 
     public GameObject hoverObject;
+
+    public GameObject actionAreaObject;
+
+    public Transform enemy { get; set; }
+    public Transform player { get; set; }
+
+    public bool inActionArea { get => inActionArea; set { inActionArea = value; SetToActionArea(value); } }
+
+    private void SetToActionArea(bool value)
+    {
+        actionAreaObject.SetActive(value);
+    }
 }
