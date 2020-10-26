@@ -46,6 +46,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -93,7 +94,6 @@ GameObject:
   - component: {fileID: 7793086645779620246}
   - component: {fileID: 1107822738302303237}
   - component: {fileID: 7979682919829950278}
-  - component: {fileID: 7320742199693901456}
   m_Layer: 0
   m_Name: CaseObject
   m_TagString: Untagged
@@ -132,6 +132,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -156,6 +157,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!102 &7979682919829950278
 TextMesh:
   serializedVersion: 3
@@ -178,32 +180,6 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
---- !u!114 &7320742199693901456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1669189911196716737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2fec8e3fd9ecbd4eaffc29cdb7e5599, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myCase:
-    _Environment: {fileID: 0}
-    caseEnvironment: 0
-    visible: 0
-    conductive: 0
-    inPath: 0
-    speedValue: 0
-    stealthValue: 0
-    guarded: 0
-    caseName: 
-    _case: {fileID: 1669189911196716737}
-    selectable: {fileID: 975469834844724787}
-    notSelectable: {fileID: 7226633423333006988}
-    selectionState: 0
 --- !u!1 &7226633423333006988
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,6 +226,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

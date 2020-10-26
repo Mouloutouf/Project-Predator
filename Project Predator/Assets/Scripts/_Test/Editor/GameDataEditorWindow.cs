@@ -7,6 +7,6 @@ public class GameDataEditorWindow : EditorWindow
 {
     public static void Open(GameDataObject dataObject)
     {
-        
+        GameDataEditorWindow window = GetWindow<GameDataEditorWindow>("Game Data Editor");
     }
 }
